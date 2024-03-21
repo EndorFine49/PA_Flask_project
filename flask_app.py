@@ -9,3 +9,7 @@ app = Flask(__name__)
 def hello_world():
     return 'Something big will be here one day'
 
+@app.route('/wibble')
+def wibble():
+    return 'This is something else'
+
