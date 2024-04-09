@@ -23,15 +23,16 @@ class Comment(db.Model):
     id=db.Column(db.Integer, primary_key = True)
     content=db.Column(db.String(4096))
 
-comments = []
 
 sql_pass = '6RxLryxrPY#4yB'
 
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("main.html", comments=comments)
-    comments.append(request.form["contents"])
+        return render_template("main.html", comments=Comment.query.all())
+    comment = Comment(content=request.form["contents"])
+    db.session.add(comment)
+    db.session.commit()
     return redirect(url_for('index'))
 
 @app.route('/wibble')
